@@ -1,67 +1,67 @@
-# Architecture
+# 系统架构
 
-## Data flow
+## 数据流
 
 ```text
-UserProfile (local-only)
-        ↓ resolve value only after user confirmation
-DOM Scanner ── temporary fieldId → HTMLElement map stays in content script
+UserProfile（仅本地）
+        ↓ 仅在用户确认后解析值
+DOM Scanner ── 临时 fieldId → HTMLElement 映射保留在 Content Script
         ↓
-FieldDescriptor (serializable, no DOM references)
+FieldDescriptor（可序列化，不含 DOM 引用）
         ↓
-Rule Matcher (primary, deterministic, explainable)
-        ↓ ambiguous/unmatched only
-Optional AI Semantic Fallback (sanitized structure only)
+Rule Matcher（主要路径、确定性、可解释）
+        ↓ 仅 ambiguous/unmatched
+可选 AI Semantic Fallback（仅脱敏结构）
         ↓
-Hybrid Safety Gate (allowed paths, confidence, margin, negative veto)
+Hybrid Safety Gate（合法路径、置信度、候选差距、负向否决）
         ↓
-Human Review (AI suggestions unchecked by default)
+人工审核（AI 建议默认不勾选）
         ↓
-Safe Autofill (live DOM revalidation, no overwrite by default, never submit)
+安全填充（重新校验实时 DOM、默认不覆盖、永不提交）
 ```
 
-## Layer responsibilities
+## 各层职责
 
-### UserProfile and storage
+### UserProfile 与存储
 
-`UserProfile` is validated with Zod and stored in `chrome.storage.local`. Profile resolution, including the logical highest-education path, is centralized in the Profile Resolver. Profile values never enter scanner descriptors, compatibility reports, SemanticMatchInput, cache keys, or telemetry—there is no telemetry.
+`UserProfile` 使用 Zod 校验并保存在 `chrome.storage.local`。包括最高学历逻辑路径在内的资料解析统一由 Profile Resolver 负责。Profile 值永远不会进入 Scanner 描述、兼容性报告、`SemanticMatchInput`、缓存键或遥测——项目没有遥测。
 
 ### DOM Scanner
 
-The content script scans supported native controls and extracts bounded labels, ARIA text, attributes, local context, options, group identity, visibility, and safety state. It excludes unsafe or unsupported inputs. A scan-session map holds live DOM elements; descriptors remain plain serializable objects.
+Content Script 扫描受支持的原生控件，提取长度受限的 label、ARIA 文本、属性、局部上下文、选项、分组身份、可见性与安全状态，并排除危险或不支持的输入。扫描会话 Map 保存实时 DOM 元素，Descriptor 始终是普通可序列化对象。
 
 ### Rule Matcher
 
-The Rule Matcher ranks all supported ProfileFieldPaths using configurable source weights, type evidence, option evidence, and negative evidence. Strong negative vetoes prevent dangerous mappings such as recommender contact details to the applicant profile. Existing Rule Matcher behavior is the default production path.
+Rule Matcher 使用集中配置的来源权重、类型证据、选项证据与负向证据，对全部受支持的 `ProfileFieldPath` 排序。强负向否决可阻止将推荐人联系方式映射为求职者本人资料等危险行为。现有规则行为是默认生产路径。
 
-### Optional Semantic Fallback
+### 可选语义回退
 
-The Semantic Matcher is a Provider-independent interface. It is eligible only for ambiguous or unmatched scanner-supported fields, is disabled by default, and receives a sanitized descriptor—not UserProfile values. The repository includes a Fake Provider for testing but no production remote Provider.
+Semantic Matcher 是与 Provider 无关的接口。它默认关闭，仅处理 Scanner 支持的 ambiguous 或 unmatched 字段，接收脱敏 Descriptor 而不是 Profile 值。仓库只包含用于测试的 Fake Provider，不包含生产级远程 Provider。
 
 ### Hybrid Safety Gate
 
-The gate validates structured output, allowed paths, a 0.90 initial threshold, a 0.15 Top-1 margin, and Rule vetoes. Provider errors, malformed output, timeouts, or missing configuration return the original Rule result. AI confidence is treated as a score, not a calibrated probability.
+Safety Gate 校验结构化输出、合法路径、初始阈值 0.90、Top-1 候选差距 0.15 和规则否决。Provider 错误、畸形输出、超时或配置缺失时返回原始 Rule 结果。AI confidence 只是评分，不是经过校准的概率。
 
-### Human Review
+### 人工审核
 
-Rule matches are selected by default. AI matches are visibly marked and remain unchecked until the user explicitly accepts them. The privacy preview appears before an AI fallback run.
+规则匹配默认选中；AI 匹配带有明显标识并默认不选中，只有用户主动接受后才能填写。运行 AI 回退前会展示隐私预览。
 
-### Safe Autofill
+### 安全填充
 
-Autofill resolves Profile values only after review, rechecks the current DOM, rejects stale scan sessions, preserves existing values by default, uses native setters and bubbling events, verifies writes twice, and supports conditional Undo. It never clicks or invokes a submit control.
+Autofill 只在审核后解析 Profile 值，重新检查当前 DOM，拒绝过期扫描会话，默认保留已有值，使用原生 setter 和冒泡事件，执行两次写入验证，并支持有条件 Undo。它永远不会点击或调用提交控件。
 
-## Extension boundaries
+## 扩展边界
 
-- Popup: orchestration, review, selection, and local status presentation
-- Options: local Profile and optional Provider settings
-- Content script: DOM ownership, scan sessions, filling, Undo, mutation invalidation
-- Core: framework-independent scanner, matcher, semantic contracts, safety, evaluation, and autofill logic
-- Site adapters: future isolated compatibility hooks; no real-site adapters are bundled
+- Popup：编排、审核、选择和本地状态展示
+- Options：本地 Profile 与可选 Provider 设置
+- Content Script：DOM 所有权、扫描会话、填充、Undo 与 Mutation 失效
+- Core：与框架无关的 Scanner、Matcher、语义契约、安全、评估和 Autofill
+- Site Adapter：未来的隔离兼容钩子；当前不内置真实网站 Adapter
 
-## Trust boundaries
+## 信任边界
 
-1. Webpage DOM is untrusted and may change after scanning.
-2. Provider output is untrusted and must pass strict parsing and the Safety Gate.
-3. User Profile is sensitive and remains local until a user-confirmed DOM write.
-4. Evaluation fixtures and reports are public artifacts and must remain sanitized.
-5. Submission is always outside extension control.
+1. 网页 DOM 不可信，扫描后仍可能变化。
+2. Provider 输出不可信，必须通过严格解析与 Safety Gate。
+3. User Profile 属于敏感信息，只会在用户确认写入 DOM 时使用。
+4. 评估 fixture 和报告是公开产物，必须始终脱敏。
+5. 提交行为永远不由扩展控制。
