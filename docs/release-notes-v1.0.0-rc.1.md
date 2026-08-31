@@ -1,47 +1,47 @@
 # AI Job Application Assistant v1.0.0-rc.1
 
-First public release candidate.
+首个公开候选发布版。
 
-## Highlights
+## 亮点
 
-- DOM-based form scanning
-- Explainable rule-based field matching
-- Confidence ranking and negative veto
-- Section-context-aware matching
-- Human-reviewed safe autofill
-- Existing-value protection
-- Undo support
-- Stale scan-session protection
-- Optional rule-first AI semantic fallback architecture
-- Privacy-first local storage
-- Offline evaluation
-- Automated CI and privacy checks
+- 基于 DOM 的表单扫描
+- 可解释的规则字段匹配
+- 置信度排序与负向否决
+- 支持 Section Context 的匹配
+- 经人工审核的安全填充
+- 网页已有值保护
+- Undo 撤销支持
+- 过期扫描会话保护
+- 可选的“规则优先 + AI 语义回退”架构
+- 隐私优先的本地存储
+- 离线评估
+- 自动化 CI 与隐私检查
 
-## Evaluation
+## 评估
 
-Rule Matcher results on the current limited sanitized compatibility dataset:
+Rule Matcher 在当前有限脱敏兼容性数据集上的结果：
 
-- Precision: 100.0%
-- Recall: 69.7%
-- F1: 82.1%
+- 精确率：100.0%
+- 召回率：69.7%
+- F1：82.1%
 
-These results are based on a limited sanitized compatibility dataset and should not be interpreted as representative of all recruitment websites.
+这些结果来自有限的脱敏兼容性数据集，不应被理解为对所有招聘网站都具有代表性。
 
-## AI Notice
+## AI 说明
 
-The bundled Scripted Fake Provider is only used to validate the Hybrid Matcher pipeline. It does not represent real LLM performance, and no production remote AI provider is bundled in this release.
+内置的 Scripted Fake Provider 仅用于验证 Hybrid Matcher 管线。它不代表真实大模型性能，本版本也没有内置生产级远程 AI Provider。
 
-## Safety
+## 安全性
 
-- Never auto-submits job applications
-- AI is disabled by default
-- AI suggestions require explicit user confirmation
-- Existing page values are protected by default
-- Sensitive Profile values are not included in semantic AI input
-- No backend or telemetry is included
+- 永不自动提交求职申请
+- AI 默认关闭
+- AI 建议需要用户显式确认
+- 默认保护网页已有内容
+- 语义 AI 输入不包含敏感 Profile 值
+- 不包含后端或遥测
 
-## Testing
+## 测试
 
-- Vitest: 141/141
-- Playwright E2E: 3/3
-- Total automated tests: 144/144
+- Vitest：141/141
+- Playwright E2E：3/3
+- 自动化测试总计：144/144

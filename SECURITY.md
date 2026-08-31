@@ -1,32 +1,32 @@
-# Security Policy
+# 安全政策
 
-## Supported version
+## 支持版本
 
-The V1.0 release-candidate branch is currently supported for security fixes. No compatibility or security guarantee is provided for older experimental snapshots.
+当前为 V1.0 候选发布版，安全修复以该分支为准。早期实验快照不提供兼容性或安全保证。
 
-## Reporting a vulnerability
+## 报告漏洞
 
-Use GitHub Private Vulnerability Reporting / Security Advisories for this repository. Do not open a public issue for a vulnerability that could expose profile data, extension credentials, unsafe DOM writes, submission behavior, or recruiting-site accounts.
+请使用本仓库的 GitHub Private Vulnerability Reporting / Security Advisories 私密报告。对于可能暴露 Profile 数据、扩展凭据、不安全 DOM 写入、提交行为或招聘网站账号的漏洞，请勿创建公开 Issue。
 
-Include only:
+报告仅应包含：
 
-- affected version or commit
-- minimal reproduction using fictional data
-- expected and observed security boundary
-- browser and operating-system version
+- 受影响版本或 commit
+- 使用虚构数据的最小复现
+- 预期与实际安全边界
+- 浏览器和操作系统版本
 
-Never include a real name, phone number, email, address, application content, API key, session cookie, recruiting account, or copied private webpage HTML.
+切勿包含真实姓名、手机号、邮箱、地址、申请内容、API Key、Session Cookie、招聘账号或复制的私有网页 HTML。
 
-## Security boundaries
+## 安全边界
 
-Security reports are especially relevant when they concern:
+以下问题尤其值得报告：
 
-- Profile data leaving local storage unexpectedly
-- Sensitive values entering SemanticMatchInput, logs, cache keys, fixtures, or reports
-- A negative veto being bypassed
-- Autofill targeting an excluded or stale field
-- Existing-value protection or Undo corrupting user input
-- Any automatic submit/apply behavior
-- Extension permission expansion without justification
+- Profile 数据意外离开本地存储
+- 敏感值进入 `SemanticMatchInput`、日志、缓存键、fixture 或报告
+- 强负向否决被绕过
+- Autofill 写入已排除或过期字段
+- 已有值保护或 Undo 损坏用户输入
+- 任何自动提交或自动申请行为
+- 没有充分理由的扩展权限扩大
 
-The project does not promise compatibility with every website and intentionally fails closed for unsupported components.
+项目不承诺兼容所有网站；对于不支持的组件会采取保守失败策略。

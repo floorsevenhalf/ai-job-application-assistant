@@ -1,30 +1,30 @@
-# V1.0 Roadmap
+# V1.0 路线图
 
-## Release candidate exit criteria
+## 候选发布版退出标准
 
-- Complete public documentation and governance files
-- Reproducible demo and evaluation reports
-- All CI quality, privacy, build, and browser tests passing
-- Manual review of extension permissions and packaged `dist`
-- First reviewed Git commit and release tag
+- 完成公开文档和社区治理文件
+- 提供可复现的 Demo 与评估报告
+- CI 中质量、隐私、构建和浏览器测试全部通过
+- 人工检查扩展权限和打包后的 `dist`
+- 创建经过审查的 Git commit 与发布 tag
 
-## Planned after V1.0
+## V1.0 之后的计划
 
-- Real AI Provider implemented behind the existing opt-in Provider interface
-- Larger, more diverse, sanitized compatibility dataset
-- Native `SiteAdapter` implementations for custom searchable Select controls
-- Cascading province/city/location selector support
-- Additional anonymous recruitment-site compatibility adapters
-- Firefox and Edge compatibility investigation
-- Better local debugging and user-correction datasets
+- 在现有可选 Provider 接口后实现真实 AI Provider
+- 扩充更加多样、经过脱敏的兼容性数据集
+- 为自定义搜索式 Select 实现 `SiteAdapter`
+- 支持省/市/地区级联选择器
+- 增加匿名招聘网站兼容 Adapter
+- 调研 Firefox 与 Edge 兼容性
+- 改进本地调试和用户纠错数据集
 
-## Explicit non-goals
+## 明确不做
 
-The project will not make these core directions:
+以下内容不会成为项目核心方向：
 
-- Automatic application submission
-- Bulk automatic applications
-- Automatic clicking of apply/submit controls
-- Bypassing human review or consent
-- Circumventing recruiting-site security controls
-- Uploading private profiles to a project backend
+- 自动提交申请
+- 批量自动投递
+- 自动点击申请或提交控件
+- 绕过人工审核或用户同意
+- 规避招聘网站安全控制
+- 将私人 Profile 上传到项目后端

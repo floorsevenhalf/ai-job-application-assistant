@@ -1,23 +1,23 @@
-# 30–60 Second Demo Recording
+# 30～60 秒 Demo 录制指南
 
-The demo uses only fictional data. Before recording, build and load the unpacked extension, then start the local fixture server:
+Demo 仅使用虚构数据。录制前先构建并加载解压后的扩展，再启动本地 fixture 服务：
 
 ```bash
 corepack pnpm build
 corepack pnpm dev --host 127.0.0.1
 ```
 
-Open `http://127.0.0.1:5173/examples/forms/release-demo.html` and pin the extension.
+打开 `http://127.0.0.1:5173/examples/forms/release-demo.html`，并将扩展固定到工具栏。
 
-## Suggested recording sequence
+## 建议录制顺序
 
-1. **0–6s:** Briefly show Options with the fictional profile. Keep AI disabled and show the local-only notice.
-2. **6–14s:** Open the release demo form. Point out the prefilled email, agreement checkbox, and untouched Submit button.
-3. **14–23s:** Open Popup and click **扫描当前页面**. Show detected fields, Rule paths, confidence/status, and the ambiguous `College` field.
-4. **23–31s:** Show Human Review: matched Rule fields are checked, ambiguous is disabled/unselected, and the existing email is protected.
-5. **31–40s:** Click **填充已确认字段**. Show name, phone, school, major, degree, and gender filled; email remains unchanged.
-6. **40–47s:** Show agreement checkbox still unchecked and Submit count still `0`—the extension never submits.
-7. **47–55s:** Click **撤销本次填充** and show filled fields restored while the original email remains.
-8. **55–60s:** End on the Privacy-first / Human-in-the-loop / Never auto-submit message.
+1. **0～6 秒：** 简短展示 Options 中的虚构 Profile，保持 AI 关闭并展示“仅本地存储”提示。
+2. **6～14 秒：** 打开发布 Demo 表单，指出已有值邮箱、协议复选框和尚未触发的 Submit 按钮。
+3. **14～23 秒：** 打开 Popup，点击“扫描当前页面”，展示字段、Rule 路径、置信度/状态以及 ambiguous 的 `College` 字段。
+4. **23～31 秒：** 展示人工审核：matched 规则字段已勾选、ambiguous 字段不可选、已有邮箱受到保护。
+5. **31～40 秒：** 点击“填充已确认字段”，展示成功高亮；姓名、手机、学校、专业、学历和性别完成填充，邮箱保持不变。
+6. **40～47 秒：** 展示协议复选框仍未勾选，Submit count 仍为 `0`，证明扩展从不自动提交。
+7. **47～55 秒：** 点击“撤销本次填充”，展示已填字段恢复，原有邮箱仍保持不变。
+8. **55～60 秒：** 以“隐私优先 / 人工参与 / 永不自动提交”结束。
 
-Do not type real personal data, expose an API key, open a real recruiting account, or record browser history/bookmarks containing private information.
+请勿输入真实个人信息、暴露 API Key、打开真实招聘账号，或录入包含私人信息的浏览器历史与书签。

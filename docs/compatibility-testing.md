@@ -1,30 +1,30 @@
-# Compatibility Testing Guide
+# 兼容性测试指南
 
-Use only anonymous identifiers and reconstructed observations. Never store accounts, URLs containing tokens, names, phone numbers, email addresses, identity numbers, real schools, addresses, profile values, screenshots with personal data, or copied proprietary page HTML.
+仅使用匿名编号和重新构造的观察结果。禁止保存账号、含 Token 的 URL、姓名、手机号、邮箱、身份证号、真实学校、地址、Profile 值、含个人信息的截图或复制的专有网页 HTML。
 
-## Manual record template
+## 人工记录模板
 
 ```text
-Site ID: SITE-001
-Site category: ats
-Page: Basic Info
-Fields: 12
-Scanner detected: 11 / 12
-Matcher: 9 matched / 1 ambiguous / 1 unmatched
-Correct: 9
-Autofill: 8 filled / 1 custom select unsupported
-Failure types:
+网站编号：SITE-001
+网站类别：ATS
+页面：基本信息
+字段数：12
+Scanner 检出：11 / 12
+Matcher：9 matched / 1 ambiguous / 1 unmatched
+正确：9
+Autofill：8 filled / 1 custom select unsupported
+失败类型：
 - custom_select_unsupported
 - scanner_context_incomplete
-Notes: The page uses a reconstructed custom searchable select pattern.
+备注：页面使用了重新构造的自定义搜索式下拉结构。
 ```
 
-## Procedure
+## 操作流程
 
-1. Use a fictional local profile.
-2. Record counts and stable `FailureCategory` codes, not personal field values.
-3. Reduce a failure to the smallest original fixture; remove branding and copyrighted page content.
-4. Confirm the fixture cannot identify a company or user.
-5. Run `pnpm evaluate`, `pnpm privacy:check`, and tests before committing.
+1. 使用虚构的本地 Profile。
+2. 记录数量和稳定的 `FailureCategory` 代码，不记录个人字段值。
+3. 将失败案例缩减成最小原创 fixture，并移除品牌和受版权保护的页面内容。
+4. 确认 fixture 无法识别具体公司或用户。
+5. 提交前运行 `pnpm evaluate`、`pnpm privacy:check` 和测试。
 
-Company names are optional and should normally be replaced with `SITE-NNN` in a public repository. Do not automatically scrape recruiting pages.
+公开仓库中通常应使用 `SITE-NNN` 代替公司名称。不得自动抓取招聘网页。
