@@ -1,0 +1,1 @@
+export const AI_MATCH_CONFIG = { matchThreshold: 0.9, minimumGap: 0.15, timeoutMs: 4_000, cacheMaxEntries: 100 } as const;

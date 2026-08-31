@@ -1,0 +1,215 @@
+[
+  {
+    "caseId": "EN-003",
+    "descriptor": {
+      "kind": "email",
+      "labelTexts": [],
+      "placeholder": "Email address",
+      "nearbyText": [
+        "Date of birth"
+      ],
+      "sectionTexts": [
+        "Candidate details"
+      ],
+      "options": [],
+      "inputType": "email"
+    },
+    "candidates": [
+      {
+        "profilePath": "basic.email",
+        "confidence": 0.8025
+      },
+      {
+        "profilePath": "basic.birthDate",
+        "confidence": 0.14999999999999997
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      }
+    ],
+    "expectedPath": "basic.email"
+  },
+  {
+    "caseId": "WEAK-002",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [],
+      "placeholder": "必填",
+      "name": "contact_mobile",
+      "nearbyText": [],
+      "sectionTexts": [
+        "基本资料"
+      ],
+      "options": [],
+      "inputType": "text"
+    },
+    "candidates": [
+      {
+        "profilePath": "basic.phone",
+        "confidence": 0.5249999999999999
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      },
+      {
+        "profilePath": "basic.gender",
+        "confidence": 0
+      }
+    ],
+    "expectedPath": "basic.phone"
+  },
+  {
+    "caseId": "WEAK-004",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [],
+      "placeholder": "居住地",
+      "name": "residence",
+      "nearbyText": [],
+      "sectionTexts": [
+        "基本资料"
+      ],
+      "options": [],
+      "inputType": "text"
+    },
+    "candidates": [
+      {
+        "profilePath": "basic.city",
+        "confidence": 0.765
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      },
+      {
+        "profilePath": "basic.gender",
+        "confidence": 0
+      }
+    ],
+    "expectedPath": "basic.city"
+  },
+  {
+    "caseId": "AMB-001",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [
+        "Name"
+      ],
+      "nearbyText": [
+        "Name"
+      ],
+      "sectionTexts": [],
+      "options": [],
+      "inputType": "text"
+    },
+    "candidates": [
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0.65
+      },
+      {
+        "profilePath": "basic.gender",
+        "confidence": 0
+      },
+      {
+        "profilePath": "basic.phone",
+        "confidence": 0
+      }
+    ],
+    "expectedPath": "basic.fullName"
+  },
+  {
+    "caseId": "AMB-002",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [
+        "City"
+      ],
+      "nearbyText": [
+        "City"
+      ],
+      "sectionTexts": [],
+      "options": [],
+      "inputType": "text"
+    },
+    "candidates": [
+      {
+        "profilePath": "basic.city",
+        "confidence": 0.65
+      },
+      {
+        "profilePath": "jobPreferences.preferredCities",
+        "confidence": 0.65
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      }
+    ],
+    "expectedPath": "basic.city"
+  },
+  {
+    "caseId": "AMB-003",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [
+        "College"
+      ],
+      "nearbyText": [
+        "College"
+      ],
+      "sectionTexts": [],
+      "options": [],
+      "inputType": "text"
+    },
+    "candidates": [
+      {
+        "profilePath": "educations.primary.school",
+        "confidence": 0.85
+      },
+      {
+        "profilePath": "educations.primary.college",
+        "confidence": 0.85
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      }
+    ],
+    "expectedPath": "educations.primary.school"
+  },
+  {
+    "caseId": "STEP-002",
+    "descriptor": {
+      "kind": "month",
+      "labelTexts": [
+        "结束时间"
+      ],
+      "nearbyText": [
+        "结束时间"
+      ],
+      "sectionTexts": [
+        "教育经历"
+      ],
+      "options": [],
+      "inputType": "month"
+    },
+    "candidates": [
+      {
+        "profilePath": "basic.birthDate",
+        "confidence": 0.25
+      },
+      {
+        "profilePath": "educations.primary.startDate",
+        "confidence": 0.25
+      },
+      {
+        "profilePath": "educations.primary.endDate",
+        "confidence": 0.25
+      }
+    ],
+    "expectedPath": "educations.primary.endDate"
+  }
+]

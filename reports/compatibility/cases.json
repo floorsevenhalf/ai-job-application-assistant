@@ -1,0 +1,812 @@
+[
+  {
+    "caseId": "CN-001",
+    "siteCategory": "campus-recruitment",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.fullName",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.fullName",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: chinese-basic-info.html"
+  },
+  {
+    "caseId": "CN-002",
+    "siteCategory": "campus-recruitment",
+    "pageType": "basic-info",
+    "fieldType": "tel",
+    "expectedProfilePath": "basic.phone",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.phone",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: chinese-basic-info.html"
+  },
+  {
+    "caseId": "CN-003",
+    "siteCategory": "campus-recruitment",
+    "pageType": "basic-info",
+    "fieldType": "email",
+    "expectedProfilePath": "basic.email",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.email",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: chinese-basic-info.html"
+  },
+  {
+    "caseId": "CN-004",
+    "siteCategory": "campus-recruitment",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.city",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.city",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: chinese-basic-info.html"
+  },
+  {
+    "caseId": "CN-005",
+    "siteCategory": "campus-recruitment",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.region",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.region",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: chinese-basic-info.html"
+  },
+  {
+    "caseId": "EN-001",
+    "siteCategory": "ats",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.fullName",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.fullName",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: english-basic-info.html"
+  },
+  {
+    "caseId": "EN-002",
+    "siteCategory": "ats",
+    "pageType": "basic-info",
+    "fieldType": "tel",
+    "expectedProfilePath": "basic.phone",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.phone",
+      "confidence": 0.9624999999999999,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: english-basic-info.html"
+  },
+  {
+    "caseId": "EN-003",
+    "siteCategory": "ats",
+    "pageType": "basic-info",
+    "fieldType": "email",
+    "expectedProfilePath": "basic.email",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "ambiguous",
+      "predictedPath": "basic.email",
+      "confidence": 0.8025,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "failureCategory": "matcher_ambiguous",
+    "notes": "Synthetic minimized fixture: english-basic-info.html"
+  },
+  {
+    "caseId": "EN-004",
+    "siteCategory": "ats",
+    "pageType": "basic-info",
+    "fieldType": "date",
+    "expectedProfilePath": "basic.birthDate",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.birthDate",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: english-basic-info.html"
+  },
+  {
+    "caseId": "EN-005",
+    "siteCategory": "ats",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.city",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.city",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: english-basic-info.html"
+  },
+  {
+    "caseId": "EDU-001",
+    "siteCategory": "company-career",
+    "pageType": "education",
+    "fieldType": "text",
+    "expectedProfilePath": "educations.primary.school",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "educations.primary.school",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: education-section.html"
+  },
+  {
+    "caseId": "EDU-002",
+    "siteCategory": "company-career",
+    "pageType": "education",
+    "fieldType": "text",
+    "expectedProfilePath": "educations.primary.college",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "educations.primary.college",
+      "confidence": 0.9,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: education-section.html"
+  },
+  {
+    "caseId": "EDU-003",
+    "siteCategory": "company-career",
+    "pageType": "education",
+    "fieldType": "select",
+    "expectedProfilePath": "educations.primary.degree",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "educations.primary.degree",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: education-section.html"
+  },
+  {
+    "caseId": "EDU-004",
+    "siteCategory": "company-career",
+    "pageType": "education",
+    "fieldType": "text",
+    "expectedProfilePath": "educations.primary.major",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "educations.primary.major",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: education-section.html"
+  },
+  {
+    "caseId": "EDU-005",
+    "siteCategory": "company-career",
+    "pageType": "education",
+    "fieldType": "month",
+    "expectedProfilePath": "educations.primary.startDate",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "educations.primary.startDate",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: education-section.html"
+  },
+  {
+    "caseId": "EDU-006",
+    "siteCategory": "company-career",
+    "pageType": "education",
+    "fieldType": "month",
+    "expectedProfilePath": "educations.primary.endDate",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "educations.primary.endDate",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: education-section.html"
+  },
+  {
+    "caseId": "WEAK-001",
+    "siteCategory": "generic-form",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.fullName",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "partial"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.fullName",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: weak-label-form.html"
+  },
+  {
+    "caseId": "WEAK-002",
+    "siteCategory": "generic-form",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.phone",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "partial"
+    },
+    "matcher": {
+      "status": "unmatched",
+      "confidence": 0.5249999999999999,
+      "correct": false
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "failureCategory": "matcher_unmatched",
+    "notes": "Synthetic minimized fixture: weak-label-form.html"
+  },
+  {
+    "caseId": "WEAK-003",
+    "siteCategory": "generic-form",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.email",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "partial"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.email",
+      "confidence": 0.95,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: weak-label-form.html"
+  },
+  {
+    "caseId": "WEAK-004",
+    "siteCategory": "generic-form",
+    "pageType": "basic-info",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.city",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "partial"
+    },
+    "matcher": {
+      "status": "ambiguous",
+      "predictedPath": "basic.city",
+      "confidence": 0.765,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "failureCategory": "matcher_ambiguous",
+    "notes": "Synthetic minimized fixture: weak-label-form.html"
+  },
+  {
+    "caseId": "AMB-001",
+    "siteCategory": "ats",
+    "pageType": "mixed",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.fullName",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "partial"
+    },
+    "matcher": {
+      "status": "ambiguous",
+      "predictedPath": "basic.fullName",
+      "confidence": 0.65,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "failureCategory": "matcher_ambiguous",
+    "notes": "Synthetic minimized fixture: ambiguous-form.html"
+  },
+  {
+    "caseId": "AMB-002",
+    "siteCategory": "ats",
+    "pageType": "mixed",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.city",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "partial"
+    },
+    "matcher": {
+      "status": "ambiguous",
+      "predictedPath": "basic.city",
+      "confidence": 0.65,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "failureCategory": "matcher_ambiguous",
+    "notes": "Synthetic minimized fixture: ambiguous-form.html"
+  },
+  {
+    "caseId": "AMB-003",
+    "siteCategory": "ats",
+    "pageType": "mixed",
+    "fieldType": "text",
+    "expectedProfilePath": "educations.primary.school",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "partial"
+    },
+    "matcher": {
+      "status": "ambiguous",
+      "predictedPath": "educations.primary.school",
+      "confidence": 0.85,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "failureCategory": "matcher_ambiguous",
+    "notes": "Synthetic minimized fixture: ambiguous-form.html"
+  },
+  {
+    "caseId": "AMB-004",
+    "siteCategory": "ats",
+    "pageType": "mixed",
+    "fieldType": "month",
+    "expectedProfilePath": "educations.primary.startDate",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "partial"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "educations.primary.startDate",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "notes": "Synthetic minimized fixture: ambiguous-form.html"
+  },
+  {
+    "caseId": "DUP-001",
+    "siteCategory": "company-career",
+    "pageType": "mixed",
+    "fieldType": "text",
+    "expectedProfilePath": "basic.fullName",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.fullName",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: duplicate-name-form.html"
+  },
+  {
+    "caseId": "DUP-002",
+    "siteCategory": "company-career",
+    "pageType": "mixed",
+    "fieldType": "text",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "unmatched",
+      "confidence": 0,
+      "correct": false
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "notes": "Synthetic minimized fixture: duplicate-name-form.html"
+  },
+  {
+    "caseId": "DUP-003",
+    "siteCategory": "company-career",
+    "pageType": "mixed",
+    "fieldType": "tel",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "unmatched",
+      "confidence": 0,
+      "correct": false
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "notes": "Synthetic minimized fixture: duplicate-name-form.html"
+  },
+  {
+    "caseId": "DUP-004",
+    "siteCategory": "company-career",
+    "pageType": "mixed",
+    "fieldType": "email",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "unmatched",
+      "confidence": 0,
+      "correct": false
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "notes": "Synthetic minimized fixture: duplicate-name-form.html"
+  },
+  {
+    "caseId": "STEP-001",
+    "siteCategory": "campus-recruitment",
+    "pageType": "multi-step",
+    "fieldType": "month",
+    "expectedProfilePath": "educations.primary.startDate",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "educations.primary.startDate",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: multi-step-visible-section.html"
+  },
+  {
+    "caseId": "STEP-002",
+    "siteCategory": "campus-recruitment",
+    "pageType": "multi-step",
+    "fieldType": "month",
+    "expectedProfilePath": "educations.primary.endDate",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "unmatched",
+      "confidence": 0.25,
+      "correct": false
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "failureCategory": "matcher_unmatched",
+    "notes": "Synthetic minimized fixture: multi-step-visible-section.html"
+  },
+  {
+    "caseId": "STEP-003",
+    "siteCategory": "campus-recruitment",
+    "pageType": "multi-step",
+    "fieldType": "month",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "unmatched",
+      "confidence": 0.25,
+      "correct": false
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "notes": "Synthetic minimized fixture: multi-step-visible-section.html"
+  },
+  {
+    "caseId": "STEP-004",
+    "siteCategory": "campus-recruitment",
+    "pageType": "multi-step",
+    "fieldType": "month",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "unmatched",
+      "confidence": 0.25,
+      "correct": false
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "notes": "Synthetic minimized fixture: multi-step-visible-section.html"
+  },
+  {
+    "caseId": "STEP-005",
+    "siteCategory": "campus-recruitment",
+    "pageType": "multi-step",
+    "fieldType": "text",
+    "expectedProfilePath": "jobPreferences.directions",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "jobPreferences.directions",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: multi-step-visible-section.html"
+  },
+  {
+    "caseId": "STEP-006",
+    "siteCategory": "campus-recruitment",
+    "pageType": "multi-step",
+    "fieldType": "text",
+    "expectedProfilePath": "jobPreferences.preferredCities",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "jobPreferences.preferredCities",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: multi-step-visible-section.html"
+  },
+  {
+    "caseId": "CUSTOM-001",
+    "siteCategory": "generic-form",
+    "pageType": "mixed",
+    "fieldType": "select",
+    "expectedProfilePath": "basic.city",
+    "scanner": {
+      "detected": true,
+      "descriptorQuality": "good"
+    },
+    "matcher": {
+      "status": "matched",
+      "predictedPath": "basic.city",
+      "confidence": 1,
+      "correct": true
+    },
+    "autofill": {
+      "attempted": true,
+      "success": true
+    },
+    "notes": "Synthetic minimized fixture: custom-select-placeholder.html"
+  },
+  {
+    "caseId": "CUSTOM-002",
+    "siteCategory": "generic-form",
+    "pageType": "mixed",
+    "fieldType": "custom-select",
+    "expectedProfilePath": "educations.primary.degree",
+    "scanner": {
+      "detected": false
+    },
+    "matcher": {
+      "correct": false
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "failureCategory": "custom_select_unsupported",
+    "notes": "Synthetic minimized fixture: custom-select-placeholder.html"
+  },
+  {
+    "caseId": "CUSTOM-003",
+    "siteCategory": "generic-form",
+    "pageType": "mixed",
+    "fieldType": "cascade-selector",
+    "expectedProfilePath": "basic.region",
+    "scanner": {
+      "detected": false
+    },
+    "matcher": {
+      "correct": false
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "failureCategory": "cascade_selector_unsupported",
+    "notes": "Synthetic minimized fixture: custom-select-placeholder.html"
+  },
+  {
+    "caseId": "CUSTOM-004",
+    "siteCategory": "generic-form",
+    "pageType": "mixed",
+    "fieldType": "contenteditable",
+    "expectedProfilePath": "jobPreferences.directions",
+    "scanner": {
+      "detected": false
+    },
+    "matcher": {
+      "correct": false
+    },
+    "autofill": {
+      "attempted": false
+    },
+    "failureCategory": "contenteditable",
+    "notes": "Synthetic minimized fixture: custom-select-placeholder.html"
+  }
+]

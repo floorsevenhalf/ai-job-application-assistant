@@ -1,0 +1,2 @@
+import type { AIProvider, SemanticMatchInput } from "./types";
+export class FakeAIProvider implements AIProvider{readonly id="fake";calls:SemanticMatchInput[]=[];constructor(private readonly handler:(input:SemanticMatchInput)=>unknown|Promise<unknown>){}async infer(input:SemanticMatchInput):Promise<unknown>{this.calls.push(structuredClone(input));return this.handler(input);}}

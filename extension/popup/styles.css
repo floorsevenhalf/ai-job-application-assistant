@@ -1,0 +1,30 @@
+:root { font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; color: #172033; }
+body { margin: 0; min-width: 330px; }
+main { padding: 20px; }
+h1 { margin: 0 0 10px; font-size: 18px; }
+p { color: #59657a; line-height: 1.55; }
+button { width: 100%; border: 0; border-radius: 8px; padding: 10px; background: #3157d5; color: #fff; font: inherit; font-weight: 700; cursor: pointer; margin-top: 8px; }
+small { display: block; margin-top: 12px; color: #6d7789; text-align: center; }
+
+.results { max-height: 320px; overflow: auto; list-style: none; padding: 0; margin: 12px 0; border: 1px solid #dde2ed; border-radius: 8px; }
+.results li { display: grid; gap: 3px; padding: 10px; border-bottom: 1px solid #edf0f5; font-size: 12px; }
+.results li:last-child { border-bottom: 0; }
+.results strong { color: #3157d5; }
+.results span { overflow-wrap: anywhere; }
+.evidence { color: #59657a; }
+
+.field-choice, .overwrite-option { display: flex; align-items: center; gap: 7px; }
+.field-choice input, .overwrite-option input { width: auto; margin: 0; }
+.overwrite-option { margin: 10px 0 4px; font-size: 12px; }
+.fill-result.filled { color: #087a43; }
+.fill-result.skipped { color: #9a6200; }
+.fill-result.failed { color: #b42318; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.performance { margin: 10px 0; font-size: 11px; color: #59657a; }
+.performance span { display: block; margin-top: 4px; }
+
+.ai-toggle { display:flex; gap:7px; font-size:12px; align-items:center; }
+.ai-toggle input { width:auto; }
+.ai-badge { color:#7c3aed; font-style:normal; font-size:10px; }
+.privacy-preview { font-size:11px; border:1px solid #ddd6fe; padding:8px; border-radius:8px; }
+.privacy-preview pre { max-height:120px; overflow:auto; background:#f8f7ff; padding:6px; white-space:pre-wrap; }

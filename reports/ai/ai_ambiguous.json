@@ -1,0 +1,38 @@
+[
+  {
+    "caseId": "STEP-002",
+    "descriptor": {
+      "kind": "month",
+      "labelTexts": [
+        "结束时间"
+      ],
+      "nearbyText": [
+        "结束时间"
+      ],
+      "sectionTexts": [
+        "教育经历"
+      ],
+      "options": [],
+      "inputType": "month"
+    },
+    "expected": "educations.primary.endDate",
+    "aiPrediction": "educations.primary.endDate",
+    "confidence": 0.78,
+    "status": "ambiguous",
+    "reasonCodes": [
+      "fake_insufficient_context"
+    ],
+    "candidates": [
+      {
+        "profilePath": "educations.primary.endDate",
+        "confidence": 0.78
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0.7
+      }
+    ],
+    "hybridStatus": "ambiguous",
+    "hybridPath": "educations.primary.endDate"
+  }
+]

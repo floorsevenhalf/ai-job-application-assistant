@@ -1,0 +1,65 @@
+{
+  "provider": "scripted-fake",
+  "disclaimer": "Pipeline validation only; not a measurement of any real AI model.",
+  "fallbackCases": 7,
+  "ai": {
+    "accuracy": 0.8571428571428571,
+    "precision": 1,
+    "recall": 0.8571428571428571,
+    "f1": 0.923076923076923,
+    "matched": 6,
+    "ambiguous": 1,
+    "wrong": 0
+  },
+  "ruleOnly": {
+    "totalFields": 38,
+    "detectedFields": 35,
+    "matcherEvaluatedFields": 35,
+    "correctMatches": 23,
+    "wrongMatches": 0,
+    "ambiguous": 5,
+    "unmatched": 7,
+    "precision": 1,
+    "recall": 0.696969696969697,
+    "f1": 0.8214285714285715,
+    "scannerDetectionRecall": 0.9210526315789473,
+    "ambiguousRate": 0.13157894736842105,
+    "unmatchedRate": 0.18421052631578946,
+    "wrongMatchRate": 0,
+    "autofillSuccessRate": 1
+  },
+  "hybrid": {
+    "precision": 1,
+    "recall": 0.8787878787878788,
+    "f1": 0.9354838709677419,
+    "wrongMatchRate": 0,
+    "correctMatches": 29,
+    "wrongMatches": 0
+  },
+  "ablationFramework": {
+    "enabled": true,
+    "conclusion": "Dataset has only seven fallback cases; no model-quality conclusion is reported.",
+    "variants": [
+      {
+        "id": "label-only",
+        "description": "Field kind and label texts only"
+      },
+      {
+        "id": "label-placeholder",
+        "description": "Label plus placeholder"
+      },
+      {
+        "id": "with-section",
+        "description": "Label, placeholder, and section context"
+      },
+      {
+        "id": "with-rule-candidates",
+        "description": "Section input plus Rule Top-3 candidates"
+      },
+      {
+        "id": "full-descriptor",
+        "description": "Complete sanitized descriptor and candidates"
+      }
+    ]
+  }
+}

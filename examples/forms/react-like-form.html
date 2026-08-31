@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>Framework-like Autofill Fixture</title></head>
+<body>
+  <label for="framework-name">姓名</label>
+  <input id="framework-name" name="fullName" placeholder="请输入姓名">
+  <p>事件记录：<output id="events">等待填充</output></p>
+  <script>
+    const input = document.querySelector("#framework-name");
+    const output = document.querySelector("#events");
+    const received = [];
+    for (const eventName of ["focus", "input", "change", "blur"]) {
+      input.addEventListener(eventName, () => {
+        received.push(eventName);
+        output.textContent = received.join(" → ") + "；state=" + input.value;
+      });
+    }
+  </script>
+</body>
+</html>

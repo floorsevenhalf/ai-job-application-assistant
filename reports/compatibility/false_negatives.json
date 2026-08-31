@@ -1,0 +1,292 @@
+[
+  {
+    "caseId": "EN-003",
+    "descriptor": {
+      "kind": "email",
+      "labelTexts": [],
+      "placeholder": "Email address",
+      "nearbyText": [
+        "Date of birth"
+      ],
+      "sectionTexts": [
+        "Candidate details"
+      ],
+      "options": [],
+      "inputType": "email"
+    },
+    "expectedProfilePath": "basic.email",
+    "status": "ambiguous",
+    "evidence": [
+      {
+        "source": "placeholder",
+        "text": "Email address",
+        "score": 0.5525,
+        "matchedTerm": "email",
+        "kind": "positive"
+      },
+      {
+        "source": "input-type",
+        "text": "email",
+        "score": 0.25,
+        "matchedTerm": "email",
+        "kind": "type"
+      }
+    ],
+    "candidates": [
+      {
+        "profilePath": "basic.email",
+        "confidence": 0.8025
+      },
+      {
+        "profilePath": "basic.birthDate",
+        "confidence": 0.14999999999999997
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      }
+    ]
+  },
+  {
+    "caseId": "WEAK-002",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [],
+      "placeholder": "必填",
+      "name": "contact_mobile",
+      "nearbyText": [],
+      "sectionTexts": [
+        "基本资料"
+      ],
+      "options": [],
+      "inputType": "text"
+    },
+    "expectedProfilePath": "basic.phone",
+    "status": "unmatched",
+    "evidence": [
+      {
+        "source": "name",
+        "text": "contact_mobile",
+        "score": 0.5249999999999999,
+        "matchedTerm": "mobile",
+        "kind": "positive"
+      }
+    ],
+    "candidates": [
+      {
+        "profilePath": "basic.phone",
+        "confidence": 0.5249999999999999
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      },
+      {
+        "profilePath": "basic.gender",
+        "confidence": 0
+      }
+    ]
+  },
+  {
+    "caseId": "WEAK-004",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [],
+      "placeholder": "居住地",
+      "name": "residence",
+      "nearbyText": [],
+      "sectionTexts": [
+        "基本资料"
+      ],
+      "options": [],
+      "inputType": "text"
+    },
+    "expectedProfilePath": "basic.city",
+    "status": "ambiguous",
+    "evidence": [
+      {
+        "source": "placeholder",
+        "text": "居住地",
+        "score": 0.765,
+        "matchedTerm": "居住地",
+        "kind": "positive"
+      }
+    ],
+    "candidates": [
+      {
+        "profilePath": "basic.city",
+        "confidence": 0.765
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      },
+      {
+        "profilePath": "basic.gender",
+        "confidence": 0
+      }
+    ]
+  },
+  {
+    "caseId": "AMB-001",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [
+        "Name"
+      ],
+      "nearbyText": [
+        "Name"
+      ],
+      "sectionTexts": [],
+      "options": [],
+      "inputType": "text"
+    },
+    "expectedProfilePath": "basic.fullName",
+    "status": "ambiguous",
+    "evidence": [
+      {
+        "source": "label",
+        "text": "Name",
+        "score": 0.65,
+        "matchedTerm": "name",
+        "kind": "positive"
+      }
+    ],
+    "candidates": [
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0.65
+      },
+      {
+        "profilePath": "basic.gender",
+        "confidence": 0
+      },
+      {
+        "profilePath": "basic.phone",
+        "confidence": 0
+      }
+    ]
+  },
+  {
+    "caseId": "AMB-002",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [
+        "City"
+      ],
+      "nearbyText": [
+        "City"
+      ],
+      "sectionTexts": [],
+      "options": [],
+      "inputType": "text"
+    },
+    "expectedProfilePath": "basic.city",
+    "status": "ambiguous",
+    "evidence": [
+      {
+        "source": "label",
+        "text": "City",
+        "score": 0.65,
+        "matchedTerm": "city",
+        "kind": "positive"
+      }
+    ],
+    "candidates": [
+      {
+        "profilePath": "basic.city",
+        "confidence": 0.65
+      },
+      {
+        "profilePath": "jobPreferences.preferredCities",
+        "confidence": 0.65
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      }
+    ]
+  },
+  {
+    "caseId": "AMB-003",
+    "descriptor": {
+      "kind": "text",
+      "labelTexts": [
+        "College"
+      ],
+      "nearbyText": [
+        "College"
+      ],
+      "sectionTexts": [],
+      "options": [],
+      "inputType": "text"
+    },
+    "expectedProfilePath": "educations.primary.school",
+    "status": "ambiguous",
+    "evidence": [
+      {
+        "source": "label",
+        "text": "College",
+        "score": 0.85,
+        "matchedTerm": "college",
+        "kind": "positive"
+      }
+    ],
+    "candidates": [
+      {
+        "profilePath": "educations.primary.school",
+        "confidence": 0.85
+      },
+      {
+        "profilePath": "educations.primary.college",
+        "confidence": 0.85
+      },
+      {
+        "profilePath": "basic.fullName",
+        "confidence": 0
+      }
+    ]
+  },
+  {
+    "caseId": "STEP-002",
+    "descriptor": {
+      "kind": "month",
+      "labelTexts": [
+        "结束时间"
+      ],
+      "nearbyText": [
+        "结束时间"
+      ],
+      "sectionTexts": [
+        "教育经历"
+      ],
+      "options": [],
+      "inputType": "month"
+    },
+    "expectedProfilePath": "educations.primary.endDate",
+    "status": "unmatched",
+    "evidence": [
+      {
+        "source": "input-type",
+        "text": "month",
+        "score": 0.25,
+        "matchedTerm": "month",
+        "kind": "type"
+      }
+    ],
+    "candidates": [
+      {
+        "profilePath": "basic.birthDate",
+        "confidence": 0.25
+      },
+      {
+        "profilePath": "educations.primary.startDate",
+        "confidence": 0.25
+      },
+      {
+        "profilePath": "educations.primary.endDate",
+        "confidence": 0.25
+      }
+    ]
+  }
+]

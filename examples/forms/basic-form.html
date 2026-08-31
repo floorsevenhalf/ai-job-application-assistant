@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head><meta charset="UTF-8" /><title>DOM Scanner 测试表单</title><style>body { font-family: sans-serif; max-width: 720px; margin: 40px auto; } .field { margin: 14px 0; } label { display: block; }</style></head>
+  <body>
+    <h1>校园招聘申请表（虚构示例）</h1>
+    <p>这段页面介绍不应全部进入任何一个字段的 nearbyText。</p>
+    <form>
+      <div class="field"><label for="full-name">姓名</label><input id="full-name" name="fullName" placeholder="请输入真实姓名" /></div>
+      <div class="field"><label for="phone">手机号</label><input id="phone" name="phone" type="tel" placeholder="请输入手机号" /></div>
+      <div class="field"><label for="email">邮箱</label><input id="email" name="email" type="email" aria-label="常用邮箱" /></div>
+      <div class="field"><label>学校<input name="school" /></label></div>
+      <div class="field"><label for="major">专业</label><input id="major" name="major" /></div>
+      <div class="field"><label for="degree">学历</label><select id="degree" name="degree"><option value="">请选择</option><option value="bachelor">本科</option><option value="master">硕士</option></select></div>
+      <fieldset><legend>性别</legend><label><input type="radio" name="gender" value="male" />男</label><label><input type="radio" name="gender" value="female" />女</label></fieldset>
+      <div class="field"><label><input type="checkbox" name="acceptTransfer" />是否接受调剂</label></div>
+      <div class="field"><label for="summary">自我介绍</label><textarea id="summary" name="summary" placeholder="请简要介绍自己"></textarea></div>
+      <div class="field"><label for="password">登录密码</label><input id="password" type="password" /></div>
+      <div class="field"><label for="captcha">验证码</label><input id="captcha" name="captcha" /></div>
+      <div class="field"><label><input type="checkbox" name="privacyConsent" />同意隐私授权</label></div>
+      <input type="hidden" name="trackingId" value="hidden-value" />
+      <div class="field"><label>禁用字段<input name="disabledField" disabled /></label></div>
+      <div class="field"><label>只读字段<input name="readOnlyField" readonly /></label></div>
+      <button type="submit">提交申请</button>
+    </form>
+  </body>
+</html>
