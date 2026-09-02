@@ -7,11 +7,12 @@ import { scanDocument } from "../../extension/core/scanner/scan-form";
 import type { UserProfile } from "../../extension/profile/schema";
 
 const profile: UserProfile = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   id: "integration-profile",
   profileName: "集成测试资料",
   basic: { fullName: "张小明", gender: "male", phone: "13800000000", email: "demo@example.com", birthDate: "2002-01-01", city: "示例市", region: "示例省" },
   educations: [{ id: "education", school: "示例大学", college: "计算机学院", degree: "本科", major: "计算机科学", startDate: "2020-09", endDate: "2024-06", isHighest: true }],
+  internships: [], projects: [], languages: [], familyMembers: [],
   jobPreferences: { directions: ["前端开发"], preferredCities: ["示例市"] },
   metadata: { createdAt: "2026-01-01", updatedAt: "2026-01-01" }
 };

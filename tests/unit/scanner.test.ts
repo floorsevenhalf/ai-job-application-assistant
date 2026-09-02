@@ -60,6 +60,37 @@ describe("DOM Scanner", () => {
     expect(nearby.length).toBeLessThanOrEqual(400);
   });
 
+  it("extracts sibling visual labels and cleans required decorations", () => {
+    setBody('<div><span>* 姓名</span><input name="name" placeholder="请输入"></div><div><span>手机号码：</span><input name="phone"></div>');
+    const fields = scanDocument().fields;
+    expect(fields[0].context.visualLabelTexts).toEqual(["姓名"]);
+    expect(fields[1].context.visualLabelTexts).toEqual(["手机号码"]);
+  });
+
+  it("extracts a visual label beside a nested input wrapper", () => {
+    setBody('<div><div>毕业院校</div><div><input name="school" placeholder="请选择"></div></div>');
+    expect(scanDocument().fields[0].context.visualLabelTexts).toEqual(["毕业院校"]);
+  });
+
+  it("extracts a visual label through two wrappers", () => {
+    setBody('<div><span>手机号码</span><div><div><input name="phone"></div></div></div>');
+    expect(scanDocument().fields[0].context.visualLabelTexts).toEqual(["手机号码"]);
+  });
+
+  it("extracts a visual label from a three-level form item", () => {
+    setBody('<div><div><div><span>毕业院校</span></div></div><div><div><input name="school" placeholder="请输入"></div></div></div>');
+    const field = scanDocument().fields[0];
+    expect(field.attributes.placeholder).toBe("请输入");
+    expect(field.context.visualLabelTexts).toEqual(["毕业院校"]);
+  });
+
+  it("rejects generic, oversized, and adjacent-field visual text", () => {
+    setBody(`<div><span>请输入</span><input name="generic"></div><div><p>${"很长的表单说明".repeat(10)}</p><input name="long"></div><div><div><span>姓名</span><input name="name"></div><div><input name="phone"></div></div>`);
+    const fields = scanDocument().fields;
+    expect(fields[0].context.visualLabelTexts).toEqual([]);
+    expect(fields[1].context.visualLabelTexts).toEqual([]);
+    expect(fields[3].context.visualLabelTexts).toEqual([]);
+  });
   it("creates unique serializable ids and a separate element map", () => {
     setBody('<input name="one"><textarea name="two"></textarea>');
     const result = scanDocument();

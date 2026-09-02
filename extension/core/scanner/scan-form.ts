@@ -1,4 +1,4 @@
-import { buildLabelIndex, getAriaLabelledByTexts, getLabelTexts, getLegendText, getNearbyText, getParentText, getSectionTexts, type LabelIndex } from "./context";
+import { buildLabelIndex, getAriaLabelledByTexts, getLabelTexts, getLegendText, getNearbyText, getParentText, getSectionTexts, getVisualLabelTexts, type LabelIndex } from "./context";
 import { exclusionReason, isVisible } from "./safety";
 import { cleanText, uniqueTexts } from "./text";
 import type { FieldDescriptor, FieldKind, FieldOption, ScanResult } from "./types";
@@ -16,10 +16,13 @@ function kindOf(element: ScannableElement): FieldKind {
   return known[element.type.toLowerCase()] ?? "unknown";
 }
 function contextFor(element: ScannableElement, labelIndex: LabelIndex): FieldContext {
-  return { labelTexts: getLabelTexts(element, labelIndex), ariaLabelledByTexts: getAriaLabelledByTexts(element), legendText: getLegendText(element), sectionTexts: getSectionTexts(element), nearbyText: getNearbyText(element), parentText: getParentText(element) };
+  const labelTexts = getLabelTexts(element, labelIndex);
+  const ariaLabelledByTexts = getAriaLabelledByTexts(element);
+  const hasExplicitLabel = labelTexts.length > 0 || ariaLabelledByTexts.length > 0 || Boolean(element.getAttribute("aria-label"));
+  return { labelTexts, visualLabelTexts: hasExplicitLabel ? [] : getVisualLabelTexts(element), ariaLabelledByTexts, legendText: getLegendText(element), sectionTexts: getSectionTexts(element), nearbyText: getNearbyText(element), parentText: getParentText(element) };
 }
 function contextText(element: ScannableElement, context: FieldContext): string {
-  return [...context.labelTexts, ...context.ariaLabelledByTexts, context.legendText, ...(context.sectionTexts ?? []), ...context.nearbyText, context.parentText, element.getAttribute("aria-label"), element instanceof HTMLSelectElement ? "" : element.placeholder, element.name, element.id].filter(Boolean).join(" ");
+  return [...context.labelTexts, ...context.visualLabelTexts, ...context.ariaLabelledByTexts, context.legendText, ...(context.sectionTexts ?? []), ...context.nearbyText, context.parentText, element.getAttribute("aria-label"), element instanceof HTMLSelectElement ? "" : element.placeholder, element.name, element.id].filter(Boolean).join(" ");
 }
 function attributesFor(element: ScannableElement): FieldDescriptor["attributes"] {
   return { type: element instanceof HTMLInputElement ? element.type : undefined, name: element.name || undefined, id: element.id || undefined, placeholder: element instanceof HTMLSelectElement ? undefined : (element.placeholder || undefined), ariaLabel: element.getAttribute("aria-label") || undefined, autocomplete: element.getAttribute("autocomplete") || undefined, role: element.getAttribute("role") || undefined };
@@ -54,6 +57,7 @@ function choiceDescriptor(elements: HTMLInputElement[], fieldId: string, metadat
   descriptor.context = {
     ...descriptor.context,
     labelTexts: uniqueTexts(elements.flatMap(element => getLabelTexts(element, labelIndex))),
+    visualLabelTexts: uniqueTexts(elements.flatMap(element => metadata.get(element)?.context.visualLabelTexts ?? [])),
     ariaLabelledByTexts: uniqueTexts(elements.flatMap(getAriaLabelledByTexts))
   };
   descriptor.options = elements.map(element => ({ value: element.value, label: getLabelTexts(element, labelIndex)[0] || element.getAttribute("aria-label") || element.value, disabled: element.disabled, checked: element.checked }));

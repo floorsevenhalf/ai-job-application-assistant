@@ -16,16 +16,20 @@ async function launchExtension(): Promise<{ context: BrowserContext; extensionId
 
 async function saveProfile(context: BrowserContext, extensionId: string): Promise<void> {
   const page = await context.newPage();
+  const consoleMessages: string[] = [];
+  page.on("console", message => consoleMessages.push(message.text()));
   await page.goto(`chrome-extension://${extensionId}/extension/options/index.html`);
   await page.getByLabel("姓名").fill("示例姓名");
   await page.getByLabel("性别").selectOption("female");
   await page.getByLabel("手机号").fill("13800000000");
   await page.getByLabel("邮箱").fill("demo@example.com");
-  await page.getByLabel("学校").fill("示例大学");
-  await page.getByLabel("学历").fill("硕士");
+  await page.locator(".card summary").first().click();
+  await page.getByLabel("学校名称").fill("示例大学");
+  await page.getByLabel("学历", { exact: true }).fill("硕士");
   await page.getByLabel("专业").fill("示例专业");
   await page.getByRole("button", { name: "保存到浏览器" }).click();
   await expect(page.getByRole("status")).toContainText("资料与 AI 设置已保存在当前浏览器本地");
+  expect(consoleMessages.join("\n")).not.toContain("cross-world extension resource mismatch");
   await page.close();
 }
 

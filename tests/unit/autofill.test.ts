@@ -9,11 +9,12 @@ import type { ProfileFieldPath } from "../../extension/profile/paths";
 import type { UserProfile } from "../../extension/profile/schema";
 
 const baseProfile: UserProfile = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   id: "autofill-profile",
   profileName: "Autofill 测试",
   basic: { fullName: "张小明", gender: "male", phone: "13800000000", email: "demo@example.com", birthDate: "2002-01-02", city: "深圳", region: "广东" },
   educations: [{ id: "education", school: "示例大学", college: "计算机学院", degree: "硕士", major: "计算机科学", startDate: "2020-09", endDate: "2024-06", isHighest: true }],
+  internships: [], projects: [], languages: [], familyMembers: [],
   jobPreferences: { directions: ["前端开发"], preferredCities: ["上海"] },
   metadata: { createdAt: "2026-01-01", updatedAt: "2026-01-01" }
 };
@@ -72,7 +73,15 @@ describe("Autofill text fields", () => {
     setBody('<input id="target">');
     const element = byId<HTMLInputElement>("target");
     element.addEventListener("input", () => { element.value = ""; });
-    expect(run(element)).toMatchObject({ status: "failed", reason: "value_not_persisted" });
+    expect(run(element)).toMatchObject({ status: "failed", reason: "value_reverted_on_input" });
+  });
+
+  it("focuses before writing so a controlled field cannot clear the new value on focus", () => {
+    setBody('<input id="target">');
+    const element = byId<HTMLInputElement>("target");
+    element.addEventListener("focus", () => { element.value = ""; });
+    expect(run(element)).toMatchObject({ status: "filled", filledValue: baseProfile.basic.fullName });
+    expect(element.value).toBe(baseProfile.basic.fullName);
   });
 });
 
@@ -204,6 +213,25 @@ describe("Matched-only request creation", () => {
       { fieldId: "empty", status: "empty_profile_value", profilePath: "basic.email", confidence: 1, evidence: [], candidatePaths: [] },
       { fieldId: "unmatched", status: "unmatched", confidence: 0, evidence: [], candidatePaths: [] }
     ];
-    expect(createFillRequests(matches, new Set(matches.map(match => match.fieldId)))).toEqual([{ fieldId: "matched", profilePath: "basic.fullName" }]);
+    const selections = new Map([
+      ['matched', { profilePath: 'basic.fullName', source: 'rule_matched' }],
+      ['ambiguous', { profilePath: 'basic.city', source: 'rule_matched' }],
+      ['empty', { profilePath: 'basic.email', source: 'rule_matched' }],
+      ['unmatched', { profilePath: 'basic.fullName', source: 'rule_matched' }]
+    ] as const);
+    expect(createFillRequests(matches, selections)).toEqual([{ fieldId: "matched", profilePath: "basic.fullName" }]);
+  });
+
+  it('requires explicit rule confirmation before creating an ambiguous request', () => {
+    const match: MatchResult = { fieldId: 'name', status: 'ambiguous', profilePath: 'basic.fullName', confidence: .72, evidence: [], candidatePaths: [{ profilePath: 'basic.fullName', confidence: .72 }] };
+    expect(createFillRequests([match], new Map())).toEqual([]);
+    expect(createFillRequests([match], new Map([['name', { profilePath: 'basic.fullName', source: 'rule_confirmed' }]]))).toEqual([{ fieldId: 'name', profilePath: 'basic.fullName' }]);
+  });
+
+  it('records rule_confirmed separately and blocks a strong veto', () => {
+    const match: MatchResult = { fieldId: 'contact', status: 'ambiguous', profilePath: 'basic.fullName', confidence: .72, evidence: [{ source: 'label', text: 'emergency contact', score: -1, kind: 'negative', veto: true }], candidatePaths: [] };
+    const selection = { profilePath: 'basic.fullName' as const, source: 'rule_confirmed' as const };
+    expect(selection.source).toBe('rule_confirmed');
+    expect(createFillRequests([match], new Map([['contact', selection]]))).toEqual([]);
   });
 });

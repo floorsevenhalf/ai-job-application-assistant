@@ -1,34 +1,22 @@
 {
-  "schemaVersion": 1,
-  "id": "demo-profile",
-  "profileName": "虚构示例资料",
-  "basic": {
-    "fullName": "张小明",
-    "gender": "male",
-    "phone": "13800000000",
-    "email": "demo@example.com",
-    "birthDate": "2002-01-01",
-    "city": "示例市",
-    "region": "示例省示例市"
-  },
+  "schemaVersion": 2,
+  "id": "fictional-campus-profile",
+  "profileName": "纯虚构秋招示例",
+  "basic": { "fullName": "林晓舟", "gender": "female", "phone": "13900000001", "email": "fictional@example.com", "birthDate": "2002-05-18", "city": "海州市", "region": "东海省海州市" },
   "educations": [
-    {
-      "id": "demo-education",
-      "school": "示例大学",
-      "college": "计算机学院",
-      "degree": "本科",
-      "major": "计算机科学与技术",
-      "startDate": "2020-09",
-      "endDate": "2024-06",
-      "isHighest": true
-    }
+    { "id": "education-master-fictional", "school": "海州理工大学", "college": "信息科学学院", "degree": "硕士", "major": "软件工程", "startDate": "2024-09", "endDate": "2027-06", "isHighest": true },
+    { "id": "education-bachelor-fictional", "school": "青岚大学", "college": "计算机学院", "degree": "本科", "major": "计算机科学与技术", "startDate": "2020-09", "endDate": "2024-06", "isHighest": false }
   ],
-  "jobPreferences": {
-    "directions": [],
-    "preferredCities": []
-  },
-  "metadata": {
-    "createdAt": "2026-01-01T00:00:00.000Z",
-    "updatedAt": "2026-01-01T00:00:00.000Z"
-  }
+  "internships": [{ "id": "internship-fictional", "company": "星河科技有限公司", "department": "平台研发部", "position": "软件开发实习生", "startDate": "2025-06", "endDate": "2025-09", "city": "云川市", "description": "参与虚构内部工具的功能开发与测试。" }],
+  "projects": [{ "id": "project-fictional", "name": "校园活动管理平台", "role": "项目负责人", "startDate": "2024-10", "endDate": "2025-03", "description": "组织虚构团队完成需求分析、开发和演示。" }],
+  "languages": [
+    { "id": "language-english-fictional", "language": "英语", "proficiency": "熟练", "certificate": "CET-6", "score": "示例成绩" },
+    { "id": "language-mandarin-fictional", "language": "普通话", "proficiency": "流利", "certificate": "普通话水平测试", "score": "示例等级" }
+  ],
+  "familyMembers": [
+    { "id": "family-1-fictional", "relationship": "父亲", "name": "林远山", "birthDate": "1975-03-12", "employer": "海州市示例制造厂", "position": "技术人员", "phone": "" },
+    { "id": "family-2-fictional", "relationship": "母亲", "name": "周清禾", "birthDate": "1977-08-26", "employer": "青岚社区服务中心", "position": "工作人员", "phone": "" }
+  ],
+  "jobPreferences": { "directions": ["软件开发"], "preferredCities": ["海州市", "云川市"] },
+  "metadata": { "createdAt": "2026-01-01T00:00:00.000Z", "updatedAt": "2026-01-01T00:00:00.000Z" }
 }

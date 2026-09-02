@@ -1,7 +1,7 @@
 import type { FieldKind } from "../scanner/types";
 import type { ProfileFieldPath } from "../../profile/paths";
 
-export type EvidenceSource = "label" | "aria-label" | "placeholder" | "name" | "id" | "legend" | "nearby-text" | "parent-text" | "input-type" | "options" | "section";
+export type EvidenceSource = "label" | "visual-label" | "aria-label" | "placeholder" | "name" | "id" | "legend" | "nearby-text" | "parent-text" | "input-type" | "options" | "section";
 
 export interface MatchEvidence {
   source: EvidenceSource;

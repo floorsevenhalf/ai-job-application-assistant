@@ -12,10 +12,10 @@ import { fillReasonMessage } from "../../extension/popup/fill-reason-messages";
 import type { UserProfile } from "../../extension/profile/schema";
 
 const profile: UserProfile = {
-  schemaVersion: 1, id: "robust", profileName: "测试",
+  schemaVersion: 2, id: "robust", profileName: "测试",
   basic: { fullName: "张小明", gender: "male", phone: "13800000000", email: "demo@example.com", birthDate: "2002-01-01", city: "深圳", region: "广东" },
   educations: [{ id: "education", school: "示例大学", college: "计算机学院", degree: "硕士", major: "计算机", startDate: "2020-09", endDate: "2024-06", isHighest: true }],
-  jobPreferences: { directions: ["前端开发"], preferredCities: ["上海"] }, metadata: { createdAt: "2026", updatedAt: "2026" }
+  internships: [], projects: [], languages: [], familyMembers: [], jobPreferences: { directions: ["前端开发"], preferredCities: ["上海"] }, metadata: { createdAt: "2026", updatedAt: "2026" }
 };
 
 function input(id = "field"): HTMLInputElement { document.body.innerHTML = `<input id="${id}">`; return document.getElementById(id) as HTMLInputElement; }

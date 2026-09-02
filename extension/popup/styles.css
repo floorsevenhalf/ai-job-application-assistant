@@ -26,5 +26,7 @@ button:disabled { opacity: .5; cursor: not-allowed; }
 .ai-toggle { display:flex; gap:7px; font-size:12px; align-items:center; }
 .ai-toggle input { width:auto; }
 .ai-badge { color:#7c3aed; font-style:normal; font-size:10px; }
+.review-badge { color:#9a6200; font-style:normal; font-size:10px; }
+.conflict-warning { color:#b42318; font-weight:700; }
 .privacy-preview { font-size:11px; border:1px solid #ddd6fe; padding:8px; border-radius:8px; }
 .privacy-preview pre { max-height:120px; overflow:auto; background:#f8f7ff; padding:6px; white-space:pre-wrap; }

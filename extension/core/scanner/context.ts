@@ -1,7 +1,51 @@
 import { cleanText, textWithoutControls, uniqueTexts } from "./text";
+import { isVisible } from "./safety";
 
 const LOCAL_CONTAINER_SELECTOR = ["label", ".form-item", ".form-group", ".field", ".control-group", ".ant-form-item", ".el-form-item", "td", "li"].join(",");
 export type LabelIndex = Map<string, string[]>;
+export const VISUAL_LABEL_MAX_ANCESTORS = 5;
+
+const VISUAL_TEXT_TAGS = new Set(["LABEL", "SPAN", "DIV", "P", "DT", "TH"]);
+const GENERIC_FIELD_TEXT = new Set([
+  "请输入", "请选择", "必填", "选填", "*", "添加", "删除", "编辑", "查看", "保存", "下一步", "上一步",
+  "please input", "please select"
+]);
+
+function normalizeVisualLabel(value: string | null | undefined): string {
+  return cleanText(value, 100).replace(/^\s*[＊*]+\s*/, "").replace(/\s*[＊*：:]+\s*$/, "").trim();
+}
+
+function visualTextCandidate(candidate: Element | null, element: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement): string | undefined {
+  if (!(candidate instanceof HTMLElement) || !isVisible(candidate)) return undefined;
+  if (candidate.querySelector("input, textarea, select")) return undefined;
+  const ariaText = candidate.getAttribute("aria-label");
+  if (!VISUAL_TEXT_TAGS.has(candidate.tagName) && !ariaText && candidate.getAttribute("role") !== "group") return undefined;
+  const text = normalizeVisualLabel(ariaText || textWithoutControls(candidate));
+  if (!text || [...text].length > 30 || text.length > 80) return undefined;
+  const normalized = text.toLocaleLowerCase();
+  if (GENERIC_FIELD_TEXT.has(normalized)) return undefined;
+  const placeholder = element instanceof HTMLSelectElement ? "" : normalizeVisualLabel(element.placeholder).toLocaleLowerCase();
+  const value = normalizeVisualLabel(element.value).toLocaleLowerCase();
+  if ((placeholder && normalized === placeholder) || (value && normalized === value)) return undefined;
+  return text;
+}
+
+export function getVisualLabelTexts(element: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement): string[] {
+  const texts: string[] = [];
+  let current: Element = element;
+  for (let depth = 0; depth <= VISUAL_LABEL_MAX_ANCESTORS; depth += 1) {
+    const candidate = visualTextCandidate(current.previousElementSibling, element);
+    if (candidate) {
+      texts.push(candidate);
+      break;
+    }
+    const parent = current.parentElement;
+    if (!parent || parent.matches("body, form") || parent.querySelectorAll("input, textarea, select").length > 1) break;
+    current = parent;
+  }
+  return uniqueTexts(texts);
+}
+
 
 export function buildLabelIndex(root: ParentNode): LabelIndex {
   const index: LabelIndex = new Map();

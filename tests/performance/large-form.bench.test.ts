@@ -7,10 +7,10 @@ import { scanDocument } from "../../extension/core/scanner/scan-form";
 import type { UserProfile } from "../../extension/profile/schema";
 
 const profile: UserProfile = {
-  schemaVersion: 1, id: "benchmark", profileName: "Benchmark",
+  schemaVersion: 2, id: "benchmark", profileName: "Benchmark",
   basic: { fullName: "示例姓名", gender: "male", phone: "13800000000", email: "demo@example.com", birthDate: "2002-01-01", city: "示例市", region: "示例省" },
   educations: [{ id: "e", school: "示例大学", college: "示例学院", degree: "本科", major: "示例专业", startDate: "2020-09", endDate: "2024-06", isHighest: true }],
-  jobPreferences: { directions: ["开发"], preferredCities: ["示例市"] }, metadata: { createdAt: "2026", updatedAt: "2026" }
+  internships: [], projects: [], languages: [], familyMembers: [], jobPreferences: { directions: ["开发"], preferredCities: ["示例市"] }, metadata: { createdAt: "2026", updatedAt: "2026" }
 };
 
 describe("large form benchmark", () => {

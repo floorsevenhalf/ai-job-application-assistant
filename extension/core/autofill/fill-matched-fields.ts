@@ -8,14 +8,19 @@ import { scalarProfileValue } from "./normalize-value";
 import { revalidateElement } from "./safety";
 import type { AutofillOptions, FillRequest, FillResult } from "./types";
 
+import type { FieldSelection } from '../../popup/human-review';
+
 const TEXT_INPUT_TYPES = new Set(["text", "email", "tel", "number", "date", "month", "search", "url"]);
 
-export function createFillRequests(matches: MatchResult[], selectedFieldIds: ReadonlySet<string>): FillRequest[] {
-  return matches.flatMap(match =>
-    match.status === "matched" && match.profilePath && selectedFieldIds.has(match.fieldId)
-      ? [{ fieldId: match.fieldId, profilePath: match.profilePath }]
-      : []
-  );
+export function createFillRequests(matches: MatchResult[], selections: ReadonlyMap<string, FieldSelection>): FillRequest[] {
+  return matches.flatMap(match => {
+    const selection = selections.get(match.fieldId);
+    if (!selection || match.profilePath !== selection.profilePath) return [];
+    if (match.status === 'matched' && selection.source !== 'rule_confirmed') return [{ fieldId: match.fieldId, profilePath: selection.profilePath }];
+    if (match.status === 'ambiguous' && selection.source === 'rule_confirmed' && match.confidence >= .65
+        && !match.evidence.some(evidence => evidence.kind === 'negative' && evidence.veto)) return [{ fieldId: match.fieldId, profilePath: selection.profilePath }];
+    return [];
+  });
 }
 
 export function fillMatchedFields(

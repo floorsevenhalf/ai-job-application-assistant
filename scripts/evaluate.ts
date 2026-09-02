@@ -10,7 +10,7 @@ const result=(config:EvaluationConfig)=>evaluateSamples(samples,config).metrics;
 const ablations=ABLATIONS.map(experiment=>({name:experiment.name,...result(experiment.config)}));
 const thresholds=[];
 for(const matchedThreshold of [.70,.75,.80,.85,.90,.95])for(const minimumGap of [.05,.10,.15,.20])thresholds.push({matchedThreshold,minimumGap,...result({matchedThreshold,minimumGap})});
-const allSources=new Set<EvidenceSource>(["label","aria-label","placeholder","legend","section","name","id","parent-text","nearby-text","input-type","options"]);
+const allSources=new Set<EvidenceSource>(["label","visual-label","aria-label","placeholder","legend","section","name","id","parent-text","nearby-text","input-type","options"]);
 const withoutSection=new Set([...allSources].filter(source=>source!=="section"));
 const sectionStudy={withoutSection:result({enabledSources:withoutSection}),withSection:report.metrics};
 mkdirSync("reports/compatibility",{recursive:true});mkdirSync("docs",{recursive:true});

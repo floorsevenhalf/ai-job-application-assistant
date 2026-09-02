@@ -8,11 +8,12 @@ import { getPrimaryEducation, resolveProfileValue } from "../../extension/profil
 import type { UserProfile } from "../../extension/profile/schema";
 
 const profile: UserProfile = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   id: "test-profile",
   profileName: "测试资料",
   basic: { fullName: "张小明", gender: "male", phone: "13800000000", email: "demo@example.com", birthDate: "2002-01-01", city: "深圳", region: "广东" },
   educations: [{ id: "education", school: "示例大学", college: "计算机学院", degree: "本科", major: "计算机科学", startDate: "2020-09", endDate: "2024-06", isHighest: true }],
+  internships: [], projects: [], languages: [], familyMembers: [],
   jobPreferences: { directions: ["前端开发"], preferredCities: ["上海"] },
   metadata: { createdAt: "2026-01-01", updatedAt: "2026-01-01" }
 };
@@ -26,6 +27,7 @@ function field(label: string, kind: FieldKind = "text", extra: Partial<FieldDesc
     attributes: { type: kind, ...extra.attributes },
     context: {
       labelTexts: label ? [label] : [],
+      visualLabelTexts: [],
       ariaLabelledByTexts: [],
       nearbyText: [],
       ...extra.context
@@ -59,7 +61,7 @@ describe("Rule Matcher correct matches", () => {
   it("matches full name", () => expectMatch(field("真实姓名"), "basic.fullName"));
   it("matches phone with tel type", () => expectMatch(field("手机号", "tel"), "basic.phone"));
   it("matches email with email type", () => expectMatch(field("电子邮箱", "email"), "basic.email"));
-  it("matches gender using legend and options", () => expectMatch(field("", "radio", { context: { labelTexts: [], ariaLabelledByTexts: [], nearbyText: [], legendText: "性别" }, options: genderOptions, group: { type: "radio", name: "gender", memberCount: 2, scopeType: "fieldset", scopeIdentity: "id:test-gender" } }), "basic.gender"));
+  it("matches gender using legend and options", () => expectMatch(field("", "radio", { context: { labelTexts: [], visualLabelTexts: [], ariaLabelledByTexts: [], nearbyText: [], legendText: "性别" }, options: genderOptions, group: { type: "radio", name: "gender", memberCount: 2, scopeType: "fieldset", scopeIdentity: "id:test-gender" } }), "basic.gender"));
   it("matches birth date", () => expectMatch(field("出生日期", "date"), "basic.birthDate"));
   it("matches school", () => expectMatch(field("毕业院校"), "educations.primary.school"));
   it("matches college", () => expectMatch(field("学院"), "educations.primary.college"));
@@ -159,5 +161,23 @@ describe("Profile resolution and result safety", () => {
     for (const result of results) expect(result.confidence).toBeLessThanOrEqual(1);
     expect(() => JSON.stringify(results)).not.toThrow();
     expect(results.every(result => result.candidatePaths.length <= 3)).toBe(true);
+  });
+});
+
+describe("Visual label and placeholder evidence", () => {
+  it("uses visual-label at its configured weight", () => {
+    const descriptor = field("", "text", { context: { labelTexts: [], visualLabelTexts: ["姓名"], ariaLabelledByTexts: [], nearbyText: [] } });
+    const rule = FIELD_RULES.find(item => item.profilePath === "basic.fullName")!;
+    const score = scoreFieldAgainstRule(descriptor, rule);
+    expect(score.positiveEvidence.some(item => item.source === "visual-label")).toBe(true);
+    expect(score.positiveEvidence.find(item => item.source === "visual-label")!.score).toBeLessThanOrEqual(0.9);
+  });
+
+  it("ignores an exact generic placeholder but keeps a semantic placeholder", () => {
+    const rule = FIELD_RULES.find(item => item.profilePath === "basic.phone")!;
+    const generic = scoreFieldAgainstRule(field("", "text", { attributes: { placeholder: "请输入" } }), rule);
+    const semantic = scoreFieldAgainstRule(field("", "text", { attributes: { placeholder: "请输入手机号" } }), rule);
+    expect(generic.positiveEvidence.some(item => item.source === "placeholder")).toBe(false);
+    expect(semantic.positiveEvidence.some(item => item.source === "placeholder")).toBe(true);
   });
 });

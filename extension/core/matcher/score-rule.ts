@@ -4,6 +4,7 @@ import { EXACT_MATCH_BONUS, NEGATIVE_PENALTY_MULTIPLIER, NEGATIVE_VETO_SOURCES, 
 import type { EvidenceSource, FieldRule, MatchEvidence, RuleScore } from "./types";
 
 interface SourceText { source: EvidenceSource; text: string; }
+const GENERIC_PLACEHOLDERS = new Set(["请输入", "请选择", "please input", "please select"]);
 export interface ScoreOptions {
   enabledSources?: ReadonlySet<EvidenceSource>;
   useNegativeEvidence?: boolean;
@@ -13,9 +14,10 @@ export interface ScoreOptions {
 function sourceTexts(field: FieldDescriptor, options: ScoreOptions): SourceText[] {
   const entries: SourceText[] = [
     ...field.context.labelTexts.map(text => ({ source: "label" as const, text })),
+    ...(field.context.visualLabelTexts ?? []).map(text => ({ source: "visual-label" as const, text })),
     ...(field.attributes.ariaLabel ? [{ source: "aria-label" as const, text: field.attributes.ariaLabel }] : []),
     ...field.context.ariaLabelledByTexts.map(text => ({ source: "aria-label" as const, text })),
-    ...(field.attributes.placeholder ? [{ source: "placeholder" as const, text: field.attributes.placeholder }] : []),
+    ...(field.attributes.placeholder && !GENERIC_PLACEHOLDERS.has(normalizeText(field.attributes.placeholder)) ? [{ source: "placeholder" as const, text: field.attributes.placeholder }] : []),
     ...(field.context.legendText ? [{ source: "legend" as const, text: field.context.legendText }] : []),
     ...(field.context.sectionTexts ?? []).map(text => ({ source: "section" as const, text })),
     ...(field.attributes.name ? [{ source: "name" as const, text: field.attributes.name }] : []),

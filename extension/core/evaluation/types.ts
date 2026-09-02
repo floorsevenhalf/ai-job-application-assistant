@@ -29,6 +29,7 @@ export interface CompatibilityCase {
 export interface SanitizedFieldDescriptor {
   kind: FieldKind;
   labelTexts: string[];
+  visualLabelTexts: string[];
   placeholder?: string;
   name?: string;
   id?: string;

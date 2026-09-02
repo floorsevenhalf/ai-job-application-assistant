@@ -2,6 +2,7 @@ import type { EvidenceSource } from "./types";
 
 export const SOURCE_WEIGHTS: Record<EvidenceSource, number> = {
   label: 1,
+  "visual-label": 0.9,
   "aria-label": 0.95,
   placeholder: 0.85,
   legend: 0.8,

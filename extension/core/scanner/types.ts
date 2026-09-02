@@ -35,6 +35,7 @@ export interface FieldDescriptor {
   };
   context: {
     labelTexts: string[];
+    visualLabelTexts: string[];
     ariaLabelledByTexts: string[];
     legendText?: string;
     sectionTexts?: string[];
