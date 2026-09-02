@@ -86,8 +86,8 @@ test("Undo restores values only while they still equal the autofilled value", as
     await clickPopup(popup, "扫描当前页面");
     await expect(popup.getByRole("status")).toContainText("已确认");
     await clickPopup(popup, "填充已确认字段");
-    await expect(form.getByTestId("name-state")).toHaveText("示例姓名");
     await expect(popup.getByRole("status")).toContainText("填充完成");
+    await expect(form.getByTestId("name-state")).toHaveText("示例姓名");
     await clickPopup(popup, "撤销本次填充");
     await expect(popup.getByRole("status")).toContainText("撤销完成");
     await expect(form.getByTestId("name-state")).toHaveText("");
