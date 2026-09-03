@@ -6,6 +6,11 @@
     "permissions":  [
                         "storage"
                     ],
+    "optional_host_permissions":  [
+                                      "https://*/*",
+                                      "http://localhost/*",
+                                      "http://127.0.0.1/*"
+                                  ],
     "action":  {
                    "default_popup":  "extension/popup/index.html",
                    "default_title":  "AI Job Application Assistant"

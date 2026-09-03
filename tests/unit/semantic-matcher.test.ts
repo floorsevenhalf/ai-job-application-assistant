@@ -6,6 +6,8 @@ import { AIProviderRegistry } from "../../extension/core/semantic/provider-regis
 import { ProviderSemanticMatcher } from "../../extension/core/semantic/semantic-matcher";
 import type { SemanticMatchResult } from "../../extension/core/semantic/types";
 import { defaultSelectedFieldIds } from "../../extension/popup/semantic-selection";
+import { defaultFieldSelections } from "../../extension/popup/human-review";
+import { createFillRequests } from "../../extension/core/autofill/fill-matched-fields";
 import type { FieldDescriptor } from "../../extension/core/scanner/types";
 import type { MatchResult } from "../../extension/core/matcher/types";
 
@@ -31,4 +33,5 @@ describe("Hybrid Semantic Matcher",()=>{
  it("does not call AI for excluded fields",async()=>{const provider=new FakeAIProvider(()=>ai());const excluded=field();excluded.safety.excluded=true;await hybridMatchField(excluded,rule(),{enabled:true,matcher:matcher(provider)});expect(provider.calls).toHaveLength(0);});
  it("validates confidence bounds",async()=>{const provider=new FakeAIProvider(()=>ai({confidence:1.2}));expect((await hybridMatchField(field(),rule(),{enabled:true,matcher:matcher(provider)})).failureReason).toBe("invalid_response");});
  it("registers providers without allowing duplicate IDs",()=>{const registry=new AIProviderRegistry();const provider=new FakeAIProvider(()=>ai());registry.register(provider);expect(registry.get("fake")).toBe(provider);expect(()=>registry.register(provider)).toThrow("duplicate_ai_provider");registry.unregister("fake");expect(registry.list()).toEqual([]);});
+  it("keeps AI suggestions unselected until human confirmation and gates FillRequest",async()=>{const provider=new FakeAIProvider(()=>ai());const hybrid=await hybridMatchField(field(),rule(),{enabled:true,matcher:matcher(provider)});const defaults=defaultFieldSelections([hybrid.hybridResult],undefined,new Set(["f1"]));expect(defaults.size).toBe(0);expect(createFillRequests([hybrid.hybridResult],defaults)).toEqual([]);const confirmed=new Map([["f1",{profilePath:"basic.fullName" as const,source:"ai_confirmed" as const}]]);expect(createFillRequests([hybrid.hybridResult],confirmed)).toEqual([{fieldId:"f1",profilePath:"basic.fullName"}]);});
 });

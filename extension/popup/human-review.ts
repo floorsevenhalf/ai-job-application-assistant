@@ -26,7 +26,8 @@ export function defaultFieldSelections(results: MatchResult[], profile?: UserPro
     const profilePath = suggestedProfilePath(result);
     if (!profilePath) return;
     if (result.status === 'matched') {
-      const source: SelectionSource = aiFieldIds.has(result.fieldId) ? 'ai_confirmed' : 'rule_matched';
+      if (aiFieldIds.has(result.fieldId)) return;
+      const source: SelectionSource = 'rule_matched';
       if (result.confidence >= DEFAULT_SELECTED_CONFIDENCE) selections.set(result.fieldId, { profilePath, source });
       return;
     }

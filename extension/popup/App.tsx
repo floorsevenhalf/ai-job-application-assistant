@@ -21,6 +21,8 @@ import { SemanticMatchCache } from "../core/semantic/cache";
 import { hybridMatchField } from "../core/semantic/hybrid-matcher";
 
 import { aiProviderRegistry } from "../core/semantic/provider-registry";
+import { providerFailureMessage } from "../core/semantic/openai-compatible-provider";
+import { requestProviderPermission } from "../core/semantic/provider-permissions";
 
 import { ProviderSemanticMatcher } from "../core/semantic/semantic-matcher";
 
@@ -32,7 +34,7 @@ import { resolveProfileValue } from "../profile/resolver";
 
 import type { UserProfile } from "../profile/schema";
 
-import { loadAISettings, saveAISettings, type AISettings } from "../storage/ai-settings";
+import { DEFAULT_AI_SETTINGS, loadAISettings, saveAISettings, type AISettings } from "../storage/ai-settings";
 
 import { loadProfile } from "../storage/profile-storage";
 
@@ -55,7 +57,7 @@ const [fillResults,setFillResults]=useState<Record<string,FillResult>>({});
 const [scanStats,setScanStats]=useState<ScanPerformanceStats|null>(null);
 const [matchStats,setMatchStats]=useState<MatchPerformanceStats|null>(null);
 const [fillStats,setFillStats]=useState<FillPerformanceStats|null>(null);
-const [aiSettings,setAISettings]=useState<AISettings>({enabled:false,providerId:"",apiKey:""});
+const [aiSettings,setAISettings]=useState<AISettings>(DEFAULT_AI_SETTINGS);
 const [aiRunning,setAIRunning]=useState(false);
 const [status,setStatus]=useState("尚未扫描当前页面。");
 
@@ -105,17 +107,20 @@ setMatchStats(null);
 setFillStats(null);
 }
  async function runAI(){if(!aiSettings.enabled)return;
+try{if(!await requestProviderPermission(aiSettings)){setStatus("未授予当前 Provider 地址的访问权限。");return;}}catch{setStatus(providerFailureMessage("provider_unavailable"));return;}
 setAIRunning(true);
 setStatus("正在运行可选 AI fallback…");
 const provider=aiProviderRegistry.get(aiSettings.providerId);
 const matcher=provider?new ProviderSemanticMatcher(provider):undefined;
-const entries=await Promise.all(fields.map(async(field,index)=>[field.fieldId,await hybridMatchField(field,rules[index],{enabled:true,matcher,cache:semanticCache})] as const));
+const entries=await Promise.all(fields.map(async(field,index)=>[field.fieldId,await hybridMatchField(field,rules[index],{enabled:true,matcher,cache:semanticCache,timeoutMs:aiSettings.timeoutMs})] as const));
 const next=new Map(entries);
 setHybrids(next);
 if(profile){const nextEffective=rules.map(rule=>next.get(rule.fieldId)?.hybridResult??rule);const aiIds=new Set([...next].filter(([,item])=>item.source==="ai").map(([id])=>id));setSelected(defaultFieldSelections(nextEffective,profile,aiIds));}
 const suggested=[...next.values()].filter(item=>item.source==="ai").length;
-const failed=[...next.values()].filter(item=>item.aiStatus==="failed").length;
-setStatus(`AI fallback 完成：建议 ${suggested}，失败/未配置 ${failed}。AI 建议需手动勾选。`);
+const failures=[...next.values()].filter(item=>item.aiStatus==="failed");
+const failed=failures.length;
+const failureText=[...new Set(failures.map(item=>item.failureReason).filter(Boolean))].map(code=>providerFailureMessage(code!)).join("；");
+setStatus(`AI fallback 完成：建议 ${suggested}，失败/未配置 ${failed}${failureText?`（${failureText}）`:""}。AI 建议需手动勾选。`);
 setAIRunning(false);
 }
  function toggleField(id:string,checked:boolean,result:MatchResult,source:FieldSelection['source']){setSelected(current=>{const next=new Map(current);

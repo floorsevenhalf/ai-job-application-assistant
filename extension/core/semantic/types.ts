@@ -25,5 +25,5 @@ export interface HybridMatchResult {
   hybridResult: MatchResult;
   source: "rule" | "ai";
   requiresHumanConfirmation: boolean;
-  failureReason?: "provider_error" | "timeout" | "invalid_response" | "provider_not_configured";
+  failureReason?: "provider_error" | "timeout" | "invalid_response" | "provider_not_configured" | "invalid_api_key" | "rate_limited" | "provider_timeout" | "provider_unavailable" | "network_error";
 }
