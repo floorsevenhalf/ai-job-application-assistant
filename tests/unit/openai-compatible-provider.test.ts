@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { OpenAICompatibleProvider, AIProviderError } from "../../extension/core/semantic/openai-compatible-provider";
+import { OpenAICompatibleProvider, AIProviderError, providerFailureDisplay } from "../../extension/core/semantic/openai-compatible-provider";
 import { ProviderSemanticMatcher } from "../../extension/core/semantic/semantic-matcher";
 import type { SemanticMatchInput, SemanticMatchResult } from "../../extension/core/semantic/types";
 
@@ -11,6 +11,7 @@ function provider(fetcher:typeof fetch){return new OpenAICompatibleProvider(conf
 
 describe("OpenAICompatibleProvider",()=>{
  afterEach(()=>vi.restoreAllMocks());
+ it("calls the default fetch without rebinding its receiver",async()=>{const fetcher=vi.fn(function(this:unknown){expect(this).toBe(globalThis);return Promise.resolve(completion(matched));});vi.stubGlobal("fetch",fetcher);await new OpenAICompatibleProvider(config).infer(input);expect(fetcher).toHaveBeenCalledOnce();});
  it("constructs a structured Chat Completions request from only SemanticMatchInput",async()=>{const fetcher=vi.fn(async(url:string|URL|Request,init?:RequestInit)=>{void url;void init;return completion(matched);});await provider(fetcher as typeof fetch).infer(input);expect(fetcher).toHaveBeenCalledOnce();const [url,init]=fetcher.mock.calls[0];expect(url).toBe("https://provider.invalid/v1/chat/completions");const body=JSON.parse(String(init?.body));expect(body.model).toBe("test-model");expect(body.response_format.type).toBe("json_schema");expect(body.response_format.json_schema.schema.properties.profilePath.enum).toEqual(input.availableProfilePaths);const sent=body.messages[1].content;expect(sent).toBe(JSON.stringify(input));expect(sent).not.toContain("UserProfile");expect(sent).not.toContain("PRIVATE_PROFILE_VALUE");});
  it("never writes the API key to console or an error",async()=>{const log=vi.spyOn(console,"log").mockImplementation(()=>{});const fetcher=vi.fn(async()=>new Response("denied",{status:401}));await expect(provider(fetcher as typeof fetch).infer(input)).rejects.toMatchObject({code:"invalid_api_key",message:"invalid_api_key"});expect(JSON.stringify(log.mock.calls)).not.toContain(config.apiKey);});
  it("parses a valid matched response",async()=>expect(new ProviderSemanticMatcher(provider((async()=>completion(matched)) as typeof fetch)).match(input)).resolves.toEqual(matched));
@@ -23,4 +24,6 @@ describe("OpenAICompatibleProvider",()=>{
  it("maps 429 to rate_limited",async()=>await expect(provider((async()=>new Response(null,{status:429})) as typeof fetch).infer(input)).rejects.toMatchObject({code:"rate_limited"}));
  it("maps AbortError to provider_timeout",async()=>{const fetcher=vi.fn((_url:string|URL|Request,init?:RequestInit)=>new Promise<Response>((_resolve,reject)=>init?.signal?.addEventListener("abort",()=>reject(new DOMException("aborted","AbortError")))));await expect(new OpenAICompatibleProvider({...config,timeoutMs:1},fetcher as typeof fetch).infer(input)).rejects.toMatchObject({code:"provider_timeout"});});
  it("falls back to strict JSON parsing when json_schema is unsupported",async()=>{const fetcher=vi.fn().mockResolvedValueOnce(new Response("response_format json_schema unsupported",{status:400})).mockResolvedValueOnce(completion(matched));expect(await provider(fetcher as typeof fetch).infer(input)).toEqual(matched);expect(fetcher).toHaveBeenCalledTimes(2);expect(JSON.parse(String(fetcher.mock.calls[1][1]?.body))).not.toHaveProperty("response_format");});
+ it("shows a sanitized HTTP diagnostic",async()=>{const fetcher=vi.fn(async()=>new Response(JSON.stringify({error:{message:"Unknown model sk-example-secret-value"}}),{status:404}));try{await provider(fetcher as typeof fetch).infer(input);}catch(error){expect(providerFailureDisplay(error)).toBe("Provider 暂不可用或配置无效（HTTP 404: Unknown model [REDACTED]）");}});
+ it("shows the underlying fetch failure",async()=>{const fetcher=vi.fn(async()=>{throw new TypeError("Failed to fetch");});try{await provider(fetcher as typeof fetch).infer(input);}catch(error){expect(providerFailureDisplay(error)).toBe("网络连接失败（Failed to fetch）");}});
 });

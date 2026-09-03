@@ -6,7 +6,32 @@ export interface OpenAICompatibleConfig { apiKey: string; baseUrl: string; model
 type ConfigSource = OpenAICompatibleConfig | (() => OpenAICompatibleConfig | Promise<OpenAICompatibleConfig>);
 
 export class AIProviderError extends Error {
-  constructor(readonly code: ProviderFailureCode) { super(code); this.name = "AIProviderError"; }
+  constructor(readonly code: ProviderFailureCode, readonly diagnostic?: string) { super(code); this.name = "AIProviderError"; }
+}
+
+function safeDiagnostic(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const cleaned = value
+    .replace(/Bearer\s+[^\s"']+/gi, "Bearer [REDACTED]")
+    .replace(/sk-[a-z0-9_-]{12,}/gi, "[REDACTED]")
+    .replace(/\s+/g, " ")
+    .trim();
+  return cleaned ? cleaned.slice(0, 300) : undefined;
+}
+
+function providerDetail(body: string): string | undefined {
+  try {
+    const parsed = JSON.parse(body) as { error?: { message?: unknown } };
+    return safeDiagnostic(parsed?.error?.message);
+  } catch {
+    return safeDiagnostic(body);
+  }
+}
+
+async function httpError(response: Response, body?: string): Promise<AIProviderError> {
+  const detail = body ?? await response.text().catch(() => "");
+  const providerMessage = providerDetail(detail);
+  return new AIProviderError(httpFailure(response.status), `HTTP ${response.status}${providerMessage ? `: ${providerMessage}` : ""}`);
 }
 
 const RESULT_SCHEMA = {
@@ -65,7 +90,7 @@ async function responseContent(response: Response): Promise<unknown> {
 
 export class OpenAICompatibleProvider implements AIProvider {
   readonly id = "openai-compatible";
-  constructor(private readonly source: ConfigSource, private readonly fetcher: typeof fetch = fetch) {}
+  constructor(private readonly source: ConfigSource, private readonly fetcher: typeof fetch = (...args) => globalThis.fetch(...args)) {}
 
   async infer(input: SemanticMatchInput): Promise<unknown> {
     const config = typeof this.source === "function" ? await this.source() : this.source;
@@ -79,14 +104,14 @@ export class OpenAICompatibleProvider implements AIProvider {
       if (response.status === 400) {
         const detail = await response.text();
         if (/response.?format|json.?schema|structured/i.test(detail)) response = await this.request(endpoint, config, input, controller.signal, false);
-        else throw new AIProviderError(httpFailure(response.status));
+        else throw await httpError(response, detail);
       }
-      if (!response.ok) throw new AIProviderError(httpFailure(response.status));
+      if (!response.ok) throw await httpError(response);
       return await responseContent(response);
     } catch (error) {
       if (error instanceof AIProviderError) throw error;
-      if (error instanceof DOMException && error.name === "AbortError") throw new AIProviderError("provider_timeout");
-      throw new AIProviderError("network_error");
+      if (error instanceof DOMException && error.name === "AbortError") throw new AIProviderError("provider_timeout", `请求在 ${config.timeoutMs} 毫秒后中止`);
+      throw new AIProviderError("network_error", safeDiagnostic(error instanceof Error ? error.message : String(error)));
     } finally { clearTimeout(timer); }
   }
 
@@ -98,4 +123,11 @@ export class OpenAICompatibleProvider implements AIProvider {
 export function providerFailureMessage(code: ProviderFailureCode | "provider_error" | "timeout" | "provider_not_configured"): string {
   const messages: Record<string, string> = { invalid_api_key: "API Key 无效", rate_limited: "请求过于频繁，请稍后重试", provider_timeout: "Provider 请求超时", timeout: "AI 匹配超时", provider_unavailable: "Provider 暂不可用或配置无效", invalid_response: "Provider 返回格式无效", network_error: "网络连接失败", provider_error: "Provider 调用失败", provider_not_configured: "Provider 未配置" };
   return messages[code] ?? "AI 调用失败";
+}
+export function providerFailureDisplay(error: unknown): string {
+  if (error instanceof AIProviderError) {
+    const message = providerFailureMessage(error.code);
+    return error.diagnostic ? `${message}（${error.diagnostic}）` : message;
+  }
+  return providerFailureMessage("provider_error");
 }
