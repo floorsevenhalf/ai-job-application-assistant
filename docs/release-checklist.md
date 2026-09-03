@@ -34,13 +34,6 @@
 - [ ] 明确标注 Fake Provider 指标只验证管线
 - [ ] 版本与兼容性限制保持一致
 
-## Demo
-
-- [ ] 使用干净的浏览器 Profile 按照 `docs/demo.md` 操作
-- [ ] 录制 30～60 秒 GIF/视频，避免出现私人浏览器界面或数据
-- [ ] 确认 Submit count 始终为 0
-- [ ] 发布媒体时添加压缩文件和替代文本
-
 ## GitHub
 
 - [ ] 创建远程仓库后替换 `OWNER/REPOSITORY` 占位符

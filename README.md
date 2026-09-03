@@ -20,7 +20,7 @@ AI Job Application Assistant 是一款基于 Chrome Manifest V3 的求职表单�
 corepack pnpm dev --host 127.0.0.1
 ```
 
-打开 `http://127.0.0.1:5173/examples/forms/release-demo.html`，按照 [Demo 录制指南](docs/demo.md) 操作。演示页包含标准字段、歧义字段、已有值字段、协议复选框和提交按钮，所有数据均为虚构数据。
+打开 `http://127.0.0.1:5173/examples/forms/release-demo.html`。演示页包含标准字段、歧义字段、已有值字段、协议复选框和提交按钮，所有数据均为虚构数据。
 
 ## 核心特性
 
